@@ -1,0 +1,137 @@
+---
+title: "Hurricane Andrew"
+author: "Kayla Choi"
+date: "11/17/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+pacman::p_load(tidyverse,
+               drat,
+               hurricaneexposuredata,
+               hurricaneexposure)
+
+addRepo("geanders")
+
+data("hurr_tracks")
+data("rain")
+
+head(hurr_tracks,15)
+head(rain, 15)
+```
+
+
+```{r}
+hmapper <- function(hurr){
+    
+    rmap = map_counties(storm = hurr, metric = "rainfall") +
+            ggtitle(hurr) +
+            theme(plot.title = element_text(hjust = 0.5))
+
+    wmap = map_counties(storm = hurr, metric = "wind") +
+            ggtitle(hurr) +
+            theme(plot.title = element_text(hjust = 0.5))
+
+    expos = map_rain_exposure(storm =hurr, 
+                  rain_limit = 175, 
+                  dist_limit = 500, 
+                  days_included =-5:3) +
+                    ggtitle(hurr) +
+                    theme(plot.title = element_text(hjust = 0.5))
+
+    ml <-  list(rmap, wmap, expos)
+    names(ml) <- c("rmap", "wmap", "expos")
+    
+    return(ml)
+}
+ 
+mapps <- hmapper("Andrew-1992") 
+
+
+mapps$rmap
+mapps$wmap
+mapps$expos
+```
+
+
+```{r}
+map_counties(storm = "Andrew-1992", metric= "wind", days_included = -5:5) +
+    ggtitle("Wind Andrew")
+
+map_counties(storm = "Andrew-1992", metric = "rainfall", days_included = -5:5) +
+    ggtitle("rain Andrew")
+
+```
+
+##Read the buoy data
+```{r}
+st41016 <- read.table(url("https://www.ndbc.noaa.gov/histsearch.php?station=41016&year=1992&f1=wspd&t1a=ge&v1a=1&t1b=&v1b=&c1=and&f2=wtmp&t2a=ge&v2a=1&t2b=&v2b=&c2=&f3=&t3a=&v3a=&t3b=&v3b=&mode=data"), skip = 2, header = TRUE)
+```
+
+map_counties(storm = "Katrina-2005", metric = "wind")
+
+
+map_counties("Katrina-2005", metric = "wind", wind_var = "sust_dur")
+
+
+
+map_counties("Katrina-2005", metric = "wind", wind_source = "ext_tracks")
+
+
+map_counties(storm = "Sandy-2012", metric = "distance")
+
+map_distance_exposure(storm = "Sandy-2012", dist_limit = 75)
+
+
+
+map_rain_exposure(storm ="Allison-2001", 
+                  rain_limit = 175, 
+                  dist_limit = 500, 
+                  days_included =-5:3)
+
+
+
+library(weathermetrics)
+
+map_wind_exposure(storm = "Katrina-2005",
+    wind_limit = convert_wind_speed(34, "knots","mps"))
+
+
+map_event_exposure(storm = "Floyd-1999", event_type = "flood")
+
+map_event_exposure(storm = "Ivan-2004", event_type = "tornado")
+
+
+map_tracks(storms = "Floyd-1999")
+
+
+
+map_tracks(storms = c("Andrew-1992", "Katrina-2005", "Rita-2005"), 
+                 alpha = 0.5,
+                 plot_points = TRUE,
+                 color = "blue")
+
+
+storms_2018 <- hurr_tracks %>% select(storm_id) %>% 
+                                distinct() %>% 
+                               mutate(year = str_extract(storm_id, "-[0-9].+")) %>% 
+                               filter(year == "-2018")
+
+map_tracks(storms = storms_2018$storm_id)
+
+
+
+
+floyd_map <- map_event_exposure(storm = "Floyd-1999", event_type = "flood")
+
+map_tracks(storms = "Floyd-1999",
+    plot_object =floyd_map,
+    plot_points =TRUE,
+    color ="darkgray"
+)
+
