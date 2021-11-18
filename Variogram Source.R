@@ -7,9 +7,9 @@ pacman::p_load(gstat, tidyverse, stringr, tidyr)
 #locations of each buoy
 
 Buoy <- c("41016", "42002", "42003", "42019", "BUSL1", "GBCL1", "MLRF1", "SMKF1")
-N <- c(24.600, 26.055, 25.925, 27.910, 27.883, 27.800, 25.012, 24.628)
-W <- c(76.500, 93.646, 85.615, 95.345, 90.900, 93.100, 80.376, 81.109)
-location_data <- data.frame(Buoy, N, W)
+latitude <- c(24.600, 26.055, 25.925, 27.910, 27.883, 27.800, 25.012, 24.628)
+longitude <- c(76.500, 93.646, 85.615, 95.345, 90.900, 93.100, 80.376, 81.109)
+location_data <- data.frame(Buoy, latitude, longitude)
 
 #combine YY MM DD
 st41016$Date <- format(as.Date(with(st41016, paste(YY, MM, DD,sep="-")), "%Y-%m-%d"), "19%y-%m-%d")
@@ -72,5 +72,11 @@ all_buoy <- rbind(b41016, b42002, b42003, b42019, bBUSL1,
                   bGBCL1, bMLRF1, bSMKF1)
 all_buoy <- left_join(all_buoy, location_data, by= "Buoy")
 
-#make a function for variogram that pulls any date you want 
+#make a variogram
+library(sp)
+coordinates(all_buoy) <- ~latitude+longitude
+vario <- variogram(mean_WSPD~1, all_buoy)
+plot(vario)
+fit <- fit.variogram(vario, model=vgm("Sph", psill = 8000, range = 1), fit.method= 6)
 
+plot(vario, fit)
