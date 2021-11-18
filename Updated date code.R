@@ -1,0 +1,8 @@
+st41016$Date <- format(as.Date(with(st41016, paste(YY, MM, DD,sep="-")), "%Y-%m-%d"), "19%y-%m-%d")
+st42002$Date <- format(as.Date(with(st42002, paste(YY, MM, DD,sep="-")), "%Y-%m-%d"), "19%y-%m-%d")
+st42003$Date <- format(as.Date(with(st42003, paste(YY, MM, DD,sep="-")), "%Y-%m-%d"), "19%y-%m-%d")
+st42019$Date <- format(as.Date(with(st42019, paste(YY, MM, DD,sep="-")), "%Y-%m-%d"), "19%y-%m-%d")
+stbusl1$Date <- format(as.Date(with(stbusl1, paste(YY, MM, DD,sep="-")), "%Y-%m-%d"), "19%y-%m-%d")
+stgbcl1$Date <- format(as.Date(with(stgbcl1, paste(YY, MM, DD,sep="-")), "%Y-%m-%d"), "19%y-%m-%d")
+stmlrf1$Date <- format(as.Date(with(stmlrf1, paste(YY, MM, DD,sep="-")), "%Y-%m-%d"), "19%y-%m-%d")
+stsmkf1$Date <- format(as.Date(with(stsmkf1, paste(YY, MM, DD,sep="-")), "%Y-%m-%d"), "19%y-%m-%d")
