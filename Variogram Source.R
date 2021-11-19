@@ -43,8 +43,8 @@ mean_GST <- i %>%
 mean_BAR <- i %>%
   group_by(Date) %>%
   summarize(mean_BAR = mean(BAR, na.rm = TRUE))
-mean_data <- left_join(mean_WSPD, mean_GST, by="Date")
-mean_data <- left_join(mean_data, mean_GST, by="Date")
+ignore <- left_join(mean_WSPD, mean_GST, by="Date")
+mean_data <- left_join(ignore, mean_BAR, by="Date")
 return(mean_data)
 }
 #that works just have to do for each buoy
@@ -72,11 +72,26 @@ all_buoy <- rbind(b41016, b42002, b42003, b42019, bBUSL1,
                   bGBCL1, bMLRF1, bSMKF1)
 all_buoy <- left_join(all_buoy, location_data, by= "Buoy")
 
+
+
 #make a variogram
 library(sp)
-coordinates(all_buoy) <- ~latitude+longitude
-vario <- variogram(mean_WSPD~1, all_buoy)
-plot(vario)
-fit <- fit.variogram(vario, model=vgm("Sph", psill = 8000, range = 1), fit.method= 6)
 
-plot(vario, fit)
+#make co just to keep all_buoy as a data frame as well
+co <- all_buoy
+coordinates(co) <- ~latitude+longitude
+
+#variogram of windspeed
+vario_wspd <- variogram(mean_WSPD~1, co)
+fit1 <- fit.variogram(vario_wspd, model=vgm("Sph", psill = 8000, range = 1), fit.method= 6)
+plot(vario_wspd, fit1)
+#variogram of windgust
+vario_gst <- variogram(mean_GST~1, co)
+fit2 <- fit.variogram(vario_gst, model=vgm("Sph", psill = 8000, range = 1), fit.method= 6)
+plot(vario_gst, fit2)
+#variogram of barometric pressure
+vario_bar <- variogram(mean_BAR~1, co)
+fit3 <- fit.variogram(vario_bar, model=vgm("Sph", psill = 8000, range = 1), fit.method= 6)
+plot(vario_bar, fit3)
+
+
