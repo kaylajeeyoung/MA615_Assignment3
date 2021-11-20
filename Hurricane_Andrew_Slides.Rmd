@@ -1,0 +1,52 @@
+---
+title: "Hurricane Andrew"
+author: "Lauren, Kayla, Andrew"
+date: "11/20/2021"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+source(file = "Andrew_Data_Source.R")
+source(file = "Variogram Source.R")
+```
+
+## Overview
+
+- Occured in 1992
+- Landfall
+  - August 24th : Florida
+  - August 26th : Louisianna
+
+## Hurrican Path
+
+```{r}
+#insert map of overall path with the buoys
+```
+
+## Next Map 
+
+```{r}
+# a map with windspeed or something
+```
+
+## Variogram Windspeed
+
+```{r}
+plot(vario_wspd, fit1)
+```
+- Interpret
+
+## Variogram Windgusts
+
+```{r}
+plot(vario_gst, fit2)
+```
+- Interpret
+
+## Variogram Barometric Pressure
+
+```{r}
+plot(vario_bar, fit3)
+```
+- Interpret

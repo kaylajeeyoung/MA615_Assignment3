@@ -95,3 +95,4 @@ plot(vario_gst, fit2)
 vario_bar <- variogram(mean_BAR~1, co)
 fit3 <- fit.variogram(vario_bar, model=vgm("Gau", psill = 40000000, range = 3.2), fit.method= 6)
 plot(vario_bar, fit3)
+
