@@ -120,7 +120,7 @@ base_map <- ggplot(map_base, aes(long, lat)) +
 #add andrew
 andrew <- andrew %>% filter(Day > 19)
 all_buoy <- all_buoy %>% filter(Day > 19)
-base_map + 
+andrew_buoy_map <- base_map + 
   geom_path(data = andrew, aes(x = longitude, y = latitude), color = "blue", size = 1) + 
   geom_point(data = location_data, aes(x = longitude, y = latitude, color = Buoy)) + 
   ggtitle("Hurricane Andrew's path and nearby buoys") + 

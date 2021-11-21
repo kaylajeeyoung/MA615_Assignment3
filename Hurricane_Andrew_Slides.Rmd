@@ -7,21 +7,21 @@ output: ioslides_presentation
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
-source(file = "Andrew_Data_Source.R")
+#source(file = "Andrew_Data_Source.R")
 source(file = "Variogram Source.R")
 ```
 
 ## Overview
 
-- Occured in 1992
-- Landfall
+- Occurred in 1992  
+- Recorded Landfall  
   - August 24th : Florida
-  - August 26th : Louisianna
+  - August 26th : Louisiana
 
-## Hurrican Path
+## Hurricane Path
 
-```{r}
-#insert map of overall path with the buoys
+```{r, echo = FALSE}
+andrew_buoy_map
 ```
 
 ## Next Map 

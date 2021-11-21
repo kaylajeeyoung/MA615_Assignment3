@@ -90,8 +90,9 @@ st42019 <-  clean_dates(read.table(url("https://www.ndbc.noaa.gov/histsearch.php
 
 ###Manipulate Andrew hurricane data
 #separate the useful dates
+andrew <- hurr_tracks %>% filter(storm_id == "Andrew-1992")
 andrew <- cbind(andrew, Day = str_split_fixed(andrew$date, "199208",2)[,2])
 andrew$Time <- str_split_fixed(andrew$Day, "^.{2}", 2)[,2]
-andrew$Day <- str_extract(andrew$Day, "^.{2}", 2)
+andrew$Day <- str_extract(andrew$Day, "^.{2}")
 
 
