@@ -8,7 +8,7 @@ pacman::p_load(gstat, tidyverse, stringr, tidyr)
 
 Buoy <- c("41016", "42002", "42003", "42019", "BUSL1", "GBCL1", "MLRF1", "SMKF1")
 latitude <- c(24.600, 26.055, 25.925, 27.910, 27.883, 27.800, 25.012, 24.628)
-longitude <- c(76.500, 93.646, 85.615, 95.345, 90.900, 93.100, 80.376, 81.109)
+longitude <- c(-76.500, -93.646, -85.615, -95.345, -90.900, -93.100, -80.376, -81.109)
 location_data <- data.frame(Buoy, latitude, longitude)
 
 #combine YY MM DD
@@ -111,4 +111,19 @@ all_buoy <- separate_dates(all_buoy)
 andrew_buoy <- inner_join(all_buoy, andrew, "Day")
 andrew_buoy <- andrew_buoy[-c(1,13)]
 
+#obtain base map
+map_base <- default_map()
+map_base <- map_base$data
+base_map <- ggplot(map_base, aes(long, lat)) + 
+  geom_polygon(aes(group = group), fill = "white", color = "black")
 
+#add andrew
+andrew <- andrew %>% filter(Day > 19)
+all_buoy <- all_buoy %>% filter(Day > 19)
+base_map + 
+  geom_path(data = andrew, aes(x = longitude, y = latitude), color = "blue", size = 1) + 
+  geom_point(data = location_data, aes(x = longitude, y = latitude, color = Buoy)) + 
+  ggtitle("Hurricane Andrew's path and nearby buoys") + 
+  theme_bw()
+
+  
