@@ -86,3 +86,12 @@ stgbcl1 <- clean_dates(read.table(url("https://www.ndbc.noaa.gov/histsearch.php?
 st42002 <- clean_dates(read.table(url("https://www.ndbc.noaa.gov/histsearch.php?station=42002&year=1992&f1=wspd&t1a=gt&v1a=1&t1b=&v1b=&c1=&f2=&t2a=&v2a=&t2b=&v2b=&c2=&f3=&t3a=&v3a=&t3b=&v3b=&mode=data"), skip = 2, header = TRUE))
 
 st42019 <-  clean_dates(read.table(url("https://www.ndbc.noaa.gov/histsearch.php?station=42019&year=1992&f1=wspd&t1a=gt&v1a=1&t1b=&v1b=&c1=&f2=&t2a=&v2a=&t2b=&v2b=&c2=&f3=&t3a=&v3a=&t3b=&v3b=&mode=data"), skip = 2, header = TRUE))
+
+
+###Manipulate Andrew hurricane data
+#separate the useful dates
+andrew <- cbind(andrew, Day = str_split_fixed(andrew$date, "199208",2)[,2])
+andrew$Time <- str_split_fixed(andrew$Day, "^.{2}", 2)[,2]
+andrew$Day <- str_extract(andrew$Day, "^.{2}", 2)
+
+

@@ -96,3 +96,19 @@ vario_bar <- variogram(mean_BAR~1, co)
 fit3 <- fit.variogram(vario_bar, model=vgm("Gau", psill = 40000000, range = 3.2), fit.method= 6)
 plot(vario_bar, fit3)
 
+
+#function to separate the dates into useful information
+separate_dates <- function(buoy){
+  date_matrix <- buoy$Date %>% str_split_fixed("-", 3)
+  buoy$Year <- date_matrix[,1]
+  buoy$Month <- date_matrix[,2]
+  buoy$Day <- date_matrix[,3]
+  invisible(buoy)
+}
+all_buoy <- separate_dates(all_buoy)
+
+#combine andrew and buoy
+andrew_buoy <- inner_join(all_buoy, andrew, "Day")
+andrew_buoy <- andrew_buoy[-c(1,13)]
+
+
