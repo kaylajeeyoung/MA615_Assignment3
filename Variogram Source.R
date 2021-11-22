@@ -2,7 +2,7 @@
 
 #source data
 source(file= "Andrew_Data_Source.R")
-pacman::p_load(gstat, tidyverse, stringr, tidyr)
+pacman::p_load(gstat, tidyverse, stringr, tidyr, ggplot2, plotly)
 
 #locations of each buoy
 
@@ -146,6 +146,6 @@ andrew_buoy_interactive <- base_map +
   ggtitle("Hurricane Andrew's path and nearby buoys") + 
   theme_bw() 
 
-ggplotly(andrew_buoy_interactive, tooltip = "text")
+andrew_buoy_interactive <- ggplotly(andrew_buoy_interactive, tooltip = "text")
 
   

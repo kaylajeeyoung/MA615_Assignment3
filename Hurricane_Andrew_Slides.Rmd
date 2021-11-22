@@ -28,7 +28,9 @@ library(shiny)
 andrew_buoy_map
 ```
 
-## Interactive Map 
+## Interactive Shiny Map 
+
+Select a day, then draw a box around desired buoy(s) to see mean values for each day  
 
 ```{r}
 ui_1 <- fluidPage(
@@ -53,7 +55,7 @@ server_1 <- function(input, output, session) {
 shinyApp(ui_1, server_1)
 ```
 
-Select a day, then draw a box around desired buoy(s) to see mean values for each day  
+
 
 ## Variogram Windspeed
 
@@ -83,6 +85,22 @@ plot(vario_bar, fit3)
 - <font size = "4"> reaches its apparent sill at about a distance of 4 </font>
   - <font size = "4"> suggests that spacial autocorrelation is no longer present beyond the range </font>
   
+## Interactive Plot of Max Mean Gust per Buoy
+
+```{r}
+andrew_buoy_interactive
+```
+
+  
 ## Discussion of Results
 
-- 
+- Max mean gust of buoys follow the path of hurricane Andrew and correspond with the recorded landfall (Florida Aug 24, Louisiana Aug 26)  
+
+- Most max mean gust of buoys very close to the path are 15-17 m/s
+
+- Buoy GBCL1:  
+  - slightly farther off the path  
+  - reaches a max mean gust of 38.3 m/s
+  - may correspond to the fact that the outskirts of a hurricane experience stronger gusts than the eye of the storm  
+  
+## Thank You! 

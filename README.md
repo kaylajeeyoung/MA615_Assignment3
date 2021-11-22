@@ -13,7 +13,7 @@ In this repository you will find:
   - Manipulation of buoy and location data in preparation for variograms
   - Variograms on windspeed, windgust, and bariometric pressure
   - Basis for shiny map in the presentation
-- Hurricane Slides
+- Hurricane_Andrew_Slides.Rmd and corresponding html
   - Sources Variogram Source.R
   - Completed ioslides presentation
   - Shows an overview of Hurricane Andrew
@@ -21,3 +21,6 @@ In this repository you will find:
   - Interactive Shiny Map
     - select a date, then use mouse to draw a box around desired buoy(s) to see mean daily data
   - Variograms with interpretations
+  - Interactive mouseover Map 
+    - displays the maximum gust speed per buoy
+  - Results Discussion
