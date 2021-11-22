@@ -11,6 +11,7 @@ latitude <- c(24.600, 26.055, 25.925, 27.910, 27.883, 27.800, 25.012, 24.628)
 longitude <- c(-76.500, -93.646, -85.615, -95.345, -90.900, -93.100, -80.376, -81.109)
 location_data <- data.frame(Buoy, latitude, longitude)
 
+
 #combine YY MM DD
 st41016$Date <- format(as.Date(with(st41016, paste(YY, MM, DD,sep="-")), "%Y-%m-%d"), "19%y-%m-%d")
 st42002$Date <- format(as.Date(with(st42002, paste(YY, MM, DD,sep="-")), "%Y-%m-%d"), "19%y-%m-%d")
@@ -118,6 +119,7 @@ map_base <- default_map()
 map_base <- map_base$data
 map_base$latitude <- map_base$lat
 map_base$longitude <- map_base$long
+
 base_map <- ggplot(map_base, aes(longitude, latitude)) + 
   geom_polygon(aes(group = group), fill = "white", color = "black")
 
@@ -129,5 +131,21 @@ andrew_buoy_map <- base_map +
   geom_point(data = location_data, aes(x = longitude, y = latitude, color = Buoy)) + 
   ggtitle("Hurricane Andrew's path and nearby buoys") + 
   theme_bw()
+
+location_data$max_mean_gust <- c(11.7, 7.37, 16.8, 7.83, 17.5, 38.3, 15.7, 11.8)
+location_data$day <- c(24, 23, 25, 27, 26, 26, 24, 24)
+
+andrew_buoy_interactive <- base_map + 
+  geom_path(data = andrew, aes(x = longitude, y = latitude), color = "blue", size = 1) + 
+  geom_point(data = location_data, aes(x = longitude, y = latitude, color = Buoy, 
+                                       text = paste("Buoy", Buoy,
+                                                    "\nLongitude", longitude,
+                                                    "\nLatitude", latitude,
+                                         "\nMax Mean Gust", max_mean_gust,
+                                         "\nDay", day))) + 
+  ggtitle("Hurricane Andrew's path and nearby buoys") + 
+  theme_bw() 
+
+ggplotly(andrew_buoy_interactive, tooltip = "text")
 
   

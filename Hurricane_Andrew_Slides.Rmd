@@ -53,6 +53,8 @@ server_1 <- function(input, output, session) {
 shinyApp(ui_1, server_1)
 ```
 
+Select a day, then draw a box around desired buoy(s) to see mean values for each day  
+
 ## Variogram Windspeed
 
 ```{r, fig.height= 4}
@@ -80,3 +82,7 @@ plot(vario_bar, fit3)
 
 - <font size = "4"> reaches its apparent sill at about a distance of 4 </font>
   - <font size = "4"> suggests that spacial autocorrelation is no longer present beyond the range </font>
+  
+## Discussion of Results
+
+- 
