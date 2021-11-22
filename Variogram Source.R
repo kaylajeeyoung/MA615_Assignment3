@@ -97,6 +97,8 @@ fit3 <- fit.variogram(vario_bar, model=vgm("Gau", psill = 40000000, range = 3.2)
 #plot(vario_bar, fit3)
 
 
+################################
+
 #function to separate the dates into useful information
 separate_dates <- function(buoy){
   date_matrix <- buoy$Date %>% str_split_fixed("-", 3)
