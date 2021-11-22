@@ -12,7 +12,7 @@ In this repository you will find:
   - Manipulation of buoy and location data in preparation for variograms
   - Variograms on windspeed, windgust, and bariometric pressure
   - Basis for shiny map in the presentation
--Hurricane Slides
+- Hurricane Slides
   - Completed presentation
   - Shows an overview of Hurricane Andrew
   - The path of the hurricane
