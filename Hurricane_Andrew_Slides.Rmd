@@ -3,20 +3,24 @@ title: "Hurricane Andrew"
 author: "Lauren, Kayla, Andrew"
 date: "11/20/2021"
 output: ioslides_presentation
+runtime: shiny
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 #source(file = "Andrew_Data_Source.R")
 source(file = "Variogram Source.R")
+library(shiny)
 ```
 
-## Overview
+## Overview of Hurricane Andrew 1992
 
-- Occurred in 1992  
-- Recorded Landfall  
-  - August 24th : Florida
-  - August 26th : Louisiana
+- Devastating Category 5 hurricane (3rd strongest US hurricane)  
+- Recorded Landfall:     
+  - August 24th : Florida  
+  - August 26th : Louisiana  
+- Total 65 dead and $27.3 billion in damage  
+
 
 ## Hurricane Path
 
@@ -27,7 +31,26 @@ andrew_buoy_map
 ## Next Map 
 
 ```{r}
-# a map with windspeed or something
+ui_1 <- fluidPage(
+  selectInput("Day", "select day", unique(all_buoy$Day)), 
+  plotOutput("plot", brush = "plot_brush"),
+  tableOutput("data")
+)
+server_1 <- function(input, output, session) {
+    output$plot <- renderPlot({
+    plot_data_buoy <- all_buoy %>% subset(Day == input$Day)
+      base_map + 
+        geom_path(data = andrew, aes(x = longitude, y = latitude), color = "blue", size = 1) + 
+        geom_point(data = plot_data_buoy, aes(x = longitude, y = latitude))
+    }, res = 96, height = 550, width = 950)
+    
+    output$data <- renderTable({
+    brushedPoints(subset(all_buoy, Day == input$Day), input$plot_brush)
+  })
+      
+}
+
+shinyApp(ui_1, server_1)
 ```
 
 ## Variogram Windspeed
@@ -35,18 +58,22 @@ andrew_buoy_map
 ```{r}
 plot(vario_wspd, fit1)
 ```
-- Interpret
+- no clear apparent sill  
+- spacial autocorrelation appears to be present throughout all distances
+  - could suggest that a trend is present in the data
 
 ## Variogram Windgusts
 
 ```{r}
 plot(vario_gst, fit2)
 ```
-- Interpret
+- quickly reaches its apparent sill well before distance reaches a value of 1  
+  - suggests spacial autocorrelation is not present beyond the range
 
 ## Variogram Barometric Pressure
 
 ```{r}
 plot(vario_bar, fit3)
 ```
-- Interpret
+- reaches its apparent sill at about a distance of 4
+  - suggests that spacial autocorrelation is no longer present beyond the range

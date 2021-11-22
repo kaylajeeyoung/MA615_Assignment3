@@ -84,17 +84,17 @@ coordinates(co) <- ~latitude+longitude
 #variogram of windspeed
 vario_wspd <- variogram(mean_WSPD~1, co)
 fit1 <- fit.variogram(vario_wspd, model=vgm("Gau", psill = 14, range = 6), fit.method= 6)
-plot(vario_wspd, fit1)
+#plot(vario_wspd, fit1)
 
 #variogram of windgust
 vario_gst <- variogram(mean_GST~1, co)
 fit2 <- fit.variogram(vario_gst, model=vgm("Gau", psill = 200, range = 2), fit.method= 6)
-plot(vario_gst, fit2)
+#plot(vario_gst, fit2)
 
 #variogram of barometric pressure
 vario_bar <- variogram(mean_BAR~1, co)
 fit3 <- fit.variogram(vario_bar, model=vgm("Gau", psill = 40000000, range = 3.2), fit.method= 6)
-plot(vario_bar, fit3)
+#plot(vario_bar, fit3)
 
 
 #function to separate the dates into useful information
@@ -114,7 +114,9 @@ andrew_buoy <- andrew_buoy[-c(1,13)]
 #obtain base map
 map_base <- default_map()
 map_base <- map_base$data
-base_map <- ggplot(map_base, aes(long, lat)) + 
+map_base$latitude <- map_base$lat
+map_base$longitude <- map_base$long
+base_map <- ggplot(map_base, aes(longitude, latitude)) + 
   geom_polygon(aes(group = group), fill = "white", color = "black")
 
 #add andrew
